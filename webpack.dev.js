@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const json = require('./package.json');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+//const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
 	mode: 'production',
@@ -42,7 +43,8 @@ module.exports = {
             // Automatically remove all unused webpack assets on rebuild
             cleanStaleWebpackAssets: true,
             protectWebpackAssets: false
-   		})
+   		}),
+	        //new BundleAnalyzerPlugin()
 	]
 	//output: { ...output options }
 }
