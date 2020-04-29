@@ -3,8 +3,6 @@ const webpack = require('webpack');
 const json = require('./package.json');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const WorkboxPlugin = require('workbox-webpack-plugin');
 //const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
@@ -47,7 +45,6 @@ module.exports = {
             protectWebpackAssets: false
    		}),
 	        //new BundleAnalyzerPlugin(),
-	        new WorkboxPlugin.GenerateSW()
 	]
 	//output: { ...output options }
 }
