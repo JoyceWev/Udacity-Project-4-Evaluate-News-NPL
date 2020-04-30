@@ -6,6 +6,8 @@ var textapi = new AYLIENTextAPI({
   application_id: "fc1e63e7",
   application_key: "b773c9e3c2e30ac9e917791652b022d8"
 });
+// Setup empty JS object to act as endpoint for all routes
+let textOfBrowser = [];
 
 const app = express()
 
@@ -19,20 +21,42 @@ app.get('/', function (req, res) {
 })
 
 // designates what port the app will listen to for incoming requests
-app.listen(8081, function () {
-    console.log('Example app listening on port 8081!')
+const port = 8080;
+app.listen(port, function () {
+    console.log('Example app listening on port '+port)
 })
 
-app.get('/test', function (req, res) {
-    res.send(mockAPIResponse)
-})
+// POST method route
+// DEZE POST DE HOI IK BEN TEKST NAAR /ADDTEXT EN HAALT DIE VERVOLGENS OP MET POSTDATA IN FORMHANDLER
+ app.post('/addText', addText);
+ 
+ function addText (req, res) {
+ 	console.log(req.body);
+ 	let textEntry = req.body;
+	textOfBrowser.unshift(textEntry);
+	res.send(textOfBrowser);
+}
+ 
+ app.get('/test', function (req, res) {
+     res.send(mockAPIResponse)
+ })
+
+// sendData
+app.get('/addText', sendData);
+
+function sendData (req, res) {
+	res.send(textOfBrowser);
+	//console.log('textofbrowser is filled with:'+textOfBrowser);
+};
 
 app.get('/sentiment', function (req, res) {
+	console.log('textofbrowser is filled with:'+ textOfBrowser );
 	textapi.sentiment({
-		text: 'you are a stupid hoe',
+		text: textOfBrowser,
 		mode: 'Document' 
 	},
 	function(error, response) {
+		//console.log(response.text)
 		if (error === null) {
 		//add your code here for manipulating response }
 		res.send(response)

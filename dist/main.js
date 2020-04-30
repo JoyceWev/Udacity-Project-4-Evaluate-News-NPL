@@ -82,14 +82,23 @@ var Client =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-// extracted by mini-css-extract-plugin
+const awaitText = async (text)=>{
+	const res = await fetch(text)
+  	try {
+		  const data = await res.json();
+    	return data;
+  	} catch(error) {
+    	console.log("error", error);
+    	// appropriately handle the error
+  	}
+};
 
 /***/ }),
 /* 1 */
@@ -117,6 +126,12 @@ var Client =
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -125,40 +140,84 @@ __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "handleSubmit", function() { return /* reexport */ handleSubmit; });
+__webpack_require__.d(__webpack_exports__, "awaitText", function() { return /* reexport */ textAwaiter["awaitText"]; });
 
 // CONCATENATED MODULE: ./src/client/js/formHandler.js
 function handleSubmit(event) {
-        let baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip=';
-        const apiKey = '&APPID=5a0022d0a3d01f08d8587c491a1cc4c1';
         event.preventDefault()
-        // check what text was put into the form field
         let formText = document.getElementById('name').value
-
+        
+        console.log("::: Data posted :::")
+        // check what text was put into the form field
         console.log("::: Form Submitted :::")
-        fetch(baseURL+formText+apiKey)
+        postData('/addText', {text: formText})
+        fetch('http://localhost:8080/addText')
         .then(res => res.json())
         .then(function(res) {
-            document.getElementById('results').innerHTML = res.city.name;
+            console.log("::: Data fetched :::")
             console.log(res);
+            document.getElementById('text').innerHTML = "Text: " + res.text
+            document.getElementById('polarity').innerHTML = "Polarity: " + res.polarity
+            document.getElementById('subjectivity').innerHTML = "Subjectivity: " + res.subjectivity
+            document.getElementById('polarity_confidence').innerHTML = "Polarity ccnfidence: " + (res.polarity_confidence*100) + "%"
+            document.getElementById('subjectivity_confidence').innerHTML = "Polarity ccnfidence: " + (res.subjectivity_confidence*100) + "%"
         });
 }
 
+const getData = async (url)=>{
+    const res = await fetch(url)
+    try {
+          const data = await res.json();
+        return data;
+    } catch(error) {
+        console.log("error", error);
+        // appropriately handle the error
+    }
+};
+
+const postData = async ( url='', data={})=>{
+    console.log(url);
+    const res = await fetch(url, {
+        method: 'POST', 
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // Body data type must match "Content-Type" header      
+        body: JSON.stringify({data}), 
+    });
+    console.log(data);
+    console.log(res);
+    try {
+        const newData = await res.json();
+        console.log(newData);
+        console.log(res);
+        return newData;
+    } catch(error) {
+        console.log("error", error);
+      // appropriately handle the error
+    }
+};
+// EXTERNAL MODULE: ./src/client/js/textAwaiter.js
+var textAwaiter = __webpack_require__(0);
+
 // EXTERNAL MODULE: ./src/client/styles/resets.scss
-var resets = __webpack_require__(0);
+var resets = __webpack_require__(1);
 
 // EXTERNAL MODULE: ./src/client/styles/base.scss
-var base = __webpack_require__(1);
+var base = __webpack_require__(2);
 
 // EXTERNAL MODULE: ./src/client/styles/footer.scss
-var footer = __webpack_require__(2);
+var footer = __webpack_require__(3);
 
 // EXTERNAL MODULE: ./src/client/styles/form.scss
-var styles_form = __webpack_require__(3);
+var styles_form = __webpack_require__(4);
 
 // EXTERNAL MODULE: ./src/client/styles/header.scss
-var header = __webpack_require__(4);
+var header = __webpack_require__(5);
 
 // CONCATENATED MODULE: ./src/client/index.js
+
 
 
 

@@ -1,4 +1,5 @@
 import { handleSubmit } from './js/formHandler'
+import { awaitText } from './js/textAwaiter'
 
 import './styles/resets.scss'
 import './styles/base.scss'
@@ -7,5 +8,6 @@ import './styles/form.scss'
 import './styles/header.scss'
 
 export {
-	handleSubmit
+	handleSubmit,
+	awaitText
 }
