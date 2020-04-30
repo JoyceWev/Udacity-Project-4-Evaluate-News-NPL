@@ -31,8 +31,8 @@ app.listen(port, function () {
  app.post('/addText', addText);
  
  function addText (req, res) {
- 	console.log(req.body);
- 	let textEntry = req.body;
+ 	let textEntry = req.query;
+ 	console.log(textEntry);
 	textOfBrowser.unshift(textEntry);
 	res.send(textOfBrowser);
 }
@@ -45,6 +45,7 @@ app.listen(port, function () {
 app.get('/addText', sendData);
 
 function sendData (req, res) {
+	console.log(req);
 	res.send(textOfBrowser);
 	//console.log('textofbrowser is filled with:'+textOfBrowser);
 };
