@@ -146,7 +146,6 @@ __webpack_require__.d(__webpack_exports__, "awaitText", function() { return /* r
 function handleSubmit(event) {
         event.preventDefault()
         let formText = document.getElementById('name').value
-        
         console.log("::: Data posted :::")
         // check what text was put into the form field
         console.log("::: Form Submitted :::")
@@ -184,9 +183,10 @@ const postData = async ( url='', data={})=>{
             'Content-Type': 'application/json',
         },
         // Body data type must match "Content-Type" header      
-        body: JSON.stringify({data}), 
+        body: JSON.stringify(data), 
     });
     console.log(data);
+    console.log(res.body)
     console.log(res);
     try {
         const newData = await res.json();

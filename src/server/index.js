@@ -28,27 +28,13 @@ app.listen(port, function () {
 
 // POST method route
 // DEZE POST DE HOI IK BEN TEKST NAAR /ADDTEXT EN HAALT DIE VERVOLGENS OP MET POSTDATA IN FORMHANDLER
- app.post('/addText', addText);
- 
- function addText (req, res) {
- 	let textEntry = req.query;
- 	console.log(textEntry);
-	textOfBrowser.unshift(textEntry);
-	res.send(textOfBrowser);
-}
- 
- app.get('/test', function (req, res) {
-     res.send(mockAPIResponse)
- })
 
-// sendData
-app.get('/addText', sendData);
-
-function sendData (req, res) {
-	console.log(req);
-	res.send(textOfBrowser);
-	//console.log('textofbrowser is filled with:'+textOfBrowser);
-};
+ // sendData
+ app.get('/addText', sendData);
+ function sendData (req, res) {
+ 	res.send({text: 'i am feeling jolly good'});
+ 	//console.log('textofbrowser is filled with:'+textOfBrowser);
+ };
 
 app.get('/sentiment', function (req, res) {
 	console.log('textofbrowser is filled with:'+ textOfBrowser );
@@ -64,4 +50,18 @@ app.get('/sentiment', function (req, res) {
 		}
 	})
 });
+
+ app.post('/addText', addText);
+ 
+ function addText (req, res) {
+ 	let textEntry = req.query;
+ 	console.log(textEntry);
+ 	console.log(req.body);
+ 	console.log(req.text);
+	res.send({ text: textEntry});
+}
+ 
+  app.get('/test', function (req, res) {
+      res.send(mockAPIResponse)
+  })
 
