@@ -1,6 +1,9 @@
+const dotenv = require('dotenv')
+dotenv.config()
 var path = require('path')
 const express = require('express')
 const mockAPIResponse = require('./mockAPI.js')
+const cors = require('cors')
 var AYLIENTextAPI = require('aylien_textapi');
 var textapi = new AYLIENTextAPI({
   application_id: "fc1e63e7",
@@ -10,6 +13,10 @@ var textapi = new AYLIENTextAPI({
 let textOfBrowser = [];
 
 const app = express()
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(cors())
 
 app.use(express.static('dist'))
 
@@ -29,17 +36,13 @@ app.listen(port, function () {
 // POST method route
 // DEZE POST DE HOI IK BEN TEKST NAAR /ADDTEXT EN HAALT DIE VERVOLGENS OP MET POSTDATA IN FORMHANDLER
 
- // sendData
- app.get('/addText', sendData);
+ app.post('/sentiment', sendData);
  function sendData (req, res) {
- 	res.send({text: 'i am feeling jolly good'});
- 	//console.log('textofbrowser is filled with:'+textOfBrowser);
- };
-
-app.get('/sentiment', function (req, res) {
-	console.log('textofbrowser is filled with:'+ textOfBrowser );
-	textapi.sentiment({
-		text: textOfBrowser,
+ 	const text = req.body.text
+ 	console.log(text);
+ 	//res.send({text: 'i am feeling jolly good'});
+ 	textapi.sentiment({
+		text: text,
 		mode: 'Document' 
 	},
 	function(error, response) {
@@ -49,19 +52,7 @@ app.get('/sentiment', function (req, res) {
 		res.send(response)
 		}
 	})
-});
+ 	//console.log('textofbrowser is filled with:'+textOfBrowser);
+ };
 
- app.post('/addText', addText);
- 
- function addText (req, res) {
- 	let textEntry = req.query;
- 	console.log(textEntry);
- 	console.log(req.body);
- 	console.log(req.text);
-	res.send({ text: textEntry});
-}
- 
-  app.get('/test', function (req, res) {
-      res.send(mockAPIResponse)
-  })
 
