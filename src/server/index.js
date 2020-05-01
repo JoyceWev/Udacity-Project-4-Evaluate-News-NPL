@@ -35,6 +35,7 @@ app.listen(port, function () {
 // POST method route
  app.post('/sentiment', sendData);
  function sendData (req, res) {
+ 	console.log(req);
  	const url = req.body.URL
  	console.log(url);
  	textapi.sentiment({
@@ -42,9 +43,10 @@ app.listen(port, function () {
 		mode: 'document' 
 	},
 	function(error, response) {
-		if (error === null) {
-		console.log(response)
-		res.send(response)
+		if (error) {
+			console.log(error)
+		} else{
+			res.send(response)
 		}
 	})
  };
