@@ -19,8 +19,6 @@ var textapi = new AYLIENTextAPI({
 // Setup empty JS object to act as endpoint for all routes
 
 app.use(express.static('dist'))
-console.log(textapi);
-console.log("the key is:"+process.env.API_KEY)
 
 console.log(__dirname);
 
