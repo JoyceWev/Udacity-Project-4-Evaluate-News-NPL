@@ -19,6 +19,8 @@ var textapi = new AYLIENTextAPI({
 // Setup empty JS object to act as endpoint for all routes
 
 app.use(express.static('dist'))
+console.log(textapi);
+console.log("the key is:"+process.env.API_KEY)
 
 console.log(__dirname);
 
@@ -35,6 +37,7 @@ app.listen(port, function () {
 // POST method route
  app.post('/sentiment', sendData);
  function sendData (req, res) {
+ 	console.log(req);
  	const url = req.body.URL
  	console.log(url);
  	textapi.sentiment({
@@ -42,9 +45,10 @@ app.listen(port, function () {
 		mode: 'document' 
 	},
 	function(error, response) {
-		if (error === null) {
-		console.log(response)
-		res.send(response)
+		if (error) {
+			console.log(error)
+		} else{
+			res.send(response)
 		}
 	})
  };
