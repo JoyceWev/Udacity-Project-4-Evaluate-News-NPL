@@ -154,7 +154,6 @@ function validURL(str) {
 }
 // CONCATENATED MODULE: ./src/client/js/dataPoster.js
 const postData = async ( url='', data={})=>{
-    console.log(url);
     const response = await fetch(url, {
         method: 'POST', 
         credentials: 'same-origin',
