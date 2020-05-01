@@ -124,25 +124,61 @@ var Client =
 __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
+__webpack_require__.d(__webpack_exports__, "postData", function() { return /* reexport */ postData; });
+__webpack_require__.d(__webpack_exports__, "validURL", function() { return /* reexport */ validURL; });
 __webpack_require__.d(__webpack_exports__, "handleSubmit", function() { return /* reexport */ handleSubmit; });
 
 // CONCATENATED MODULE: ./src/client/js/formHandler.js
 function handleSubmit(event) {
-        let baseURL = 'http://api.openweathermap.org/data/2.5/forecast?zip=';
-        const apiKey = '&APPID=5a0022d0a3d01f08d8587c491a1cc4c1';
         event.preventDefault()
-        // check what text was put into the form field
-        let formText = document.getElementById('name').value
+        let formURL = document.getElementById('name').value
+        if(validURL(formURL) === true){
+        	console.log("::: Data posted :::")
+	        // check what text was put into the form field
+	        console.log("::: Form Submitted :::")
+	        Client.postData('/sentiment', {URL: formURL})
+        } else{
+        	alert("The URL you entered is not a valid URL. Please try again.")
+        }
 
-        console.log("::: Form Submitted :::")
-        fetch(baseURL+formText+apiKey)
-        .then(res => res.json())
-        .then(function(res) {
-            document.getElementById('results').innerHTML = res.city.name;
-            console.log(res);
-        });
 }
 
+function validURL(str) {
+  var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+  return !!pattern.test(str);
+}
+// CONCATENATED MODULE: ./src/client/js/dataPoster.js
+const postData = async ( url='', data={})=>{
+    console.log(url);
+    const response = await fetch(url, {
+        method: 'POST', 
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        // Body data type must match "Content-Type" header      
+        body: JSON.stringify(data), 
+    });
+    console.log(data);
+    try {
+        let formURL = document.getElementById('name').value
+        const newData = await response.json();
+        console.log(newData);
+        document.getElementById('url').innerHTML = "Url: " + formURL
+        document.getElementById('text').innerHTML = "Text: " + newData.text
+        document.getElementById('polarity').innerHTML = "Polarity: " + newData.polarity
+        document.getElementById('polarity_confidence').innerHTML = "Polarity confidence: " + (newData.polarity_confidence*100) + "%"
+        return newData;
+    } catch(error) {
+        console.log("error", error);
+      // appropriately handle the error
+    }
+};
 // EXTERNAL MODULE: ./src/client/styles/resets.scss
 var resets = __webpack_require__(0);
 
@@ -159,6 +195,8 @@ var styles_form = __webpack_require__(3);
 var header = __webpack_require__(4);
 
 // CONCATENATED MODULE: ./src/client/index.js
+
+
 
 
 

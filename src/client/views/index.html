@@ -11,10 +11,9 @@
 
         <header>
             <div class="">
-                Logo
+                <h2>News Positivity Measurer</h2>
             </div>
             <div class="">
-                navigation
             </div>
         </header>
 
@@ -28,21 +27,27 @@
 
             <section>
                 <strong>Form Results:</strong>
-                <div id="results"></div>
+                <div id="results">
+                    <div id="url"></div>
+                    <div id="text"></div>
+                    <div id="polarity"></div>
+                    <div id="subjectivity"></div>
+                    <div id="polarity_confidence"></div>
+                    <div id="subjectivity_confidence"></div>
+                </div>
             </section>
         </main>
 
         <footer>
-            <p>This is a footer</p>
         </footer>
     <script>
         // Check that service workers are supported
-  //      if ('serviceWorker' in navigator) {
-  //          // Use the window load event to keep the page load performant
-  //          window.addEventListener('load', () => {
-  //              navigator.serviceWorker.register('/service-worker.js');
-  //          });
-  //      }
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
     </script>
     </body>
 </html>

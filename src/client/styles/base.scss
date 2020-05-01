@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@900&display=swap');
 
 // _base.scss
 $font-stack: 'Roboto', sans-serif;
+$font-header: 'Work Sans', sans-serif;
 $primary-color: #333;
 $primary-background: #FFF;
 
@@ -11,6 +13,13 @@ body {
     min-height: 100vh;
     font-family: $font-stack;
     color: $primary-color;
+}
+
+h2{
+    font-family: $font-header;
+    font-weight: bold;
+    font-size: 30px;
+    padding:8px;
 }
 
 main {

@@ -1,5 +1,11 @@
-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 40px;
+@import "base.scss";
+
+header{
+	Display:flex;
+	align-items:center;
+	padding-left:8px;
+	height:60px;
+	background-color: $primary-background;
+	color: #primary-color;
+	width: 100vw;
 }
